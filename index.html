@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LUSSO - Redefining Luxury</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --gold: #c9a961;
+            --dark-bg: #1a1d23;
+            --darker-bg: #0f1115;
+            --text-white: #ffffff;
+            --text-gray: #b8b8b8;
+            --border-gold: rgba(201, 169, 97, 0.3);
+        }
+
+        body {
+            font-family: 'Lato', sans-serif;
+            background-color: var(--dark-bg);
+            color: var(--text-white);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        ::selection {
+            background-color: rgba(201, 169, 97, 0.3);
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 1.5rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: transparent;
+            transition: all 0.3s ease;
+        }
+
+        nav.scrolled {
+            background: rgba(26, 29, 35, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 3rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 100px;
+            width: auto;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 3rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-white);
+            text-decoration: none;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            font-weight: 400;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--gold);
+        }
+
+        .menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-white);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            height: 100vh;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+        }
+
+        .hero-bg img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.4);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            padding: 0 2rem;
+        }
+
+        .hero-logo-container {
+            padding: 0;
+            margin-bottom: 3rem;
+            position: relative;
+            background: transparent;
+        }
+
+        .hero-logo-container::before,
+        .hero-logo-container::after {
+            display: none;
+        }
+
+        .hero-logo-img {
+            width: 280px;
+            height: auto;
+            filter: brightness(1.2);
+        }
+
+        .hero-title {
+            font-size: 2.5rem;
+            font-weight: 300;
+            letter-spacing: 2px;
+            color: var(--text-white);
+            margin-bottom: 1rem;
+            font-family: 'Lato', sans-serif;
+        }
+
+        .hero-subtitle {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.25rem;
+            font-weight: 400;
+            color: var(--gold);
+            font-style: italic;
+            letter-spacing: 1px;
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 3rem;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+        }
+
+        .scroll-indicator svg {
+            width: 40px;
+            height: 40px;
+            stroke: rgba(255, 255, 255, 0.6);
+            stroke-width: 1.5;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(15px); }
+        }
+
+        /* Section Styles */
+        section {
+            padding: 8rem 3rem;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+        }
+
+        .section-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .section-grid {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 5rem;
+            align-items: center;
+        }
+
+        .section-grid.reverse {
+            grid-template-columns: 2fr 1fr;
+        }
+
+        .section-title-area {
+            padding-right: 2rem;
+        }
+
+        .section-grid.reverse .section-title-area {
+            padding-right: 0;
+            padding-left: 2rem;
+            text-align: right;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            font-weight: 400;
+            color: var(--gold);
+            margin-bottom: 0.5rem;
+            line-height: 1.2;
+        }
+
+        .section-subtitle {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.25rem;
+            font-weight: 400;
+            color: var(--text-gray);
+            font-style: italic;
+            margin-bottom: 2rem;
+        }
+
+        .section-divider {
+            width: 60px;
+            height: 1px;
+            background: var(--border-gold);
+            margin-top: 1rem;
+        }
+
+        .section-grid.reverse .section-divider {
+            margin-left: auto;
+        }
+
+        .section-content {
+            font-size: 1.125rem;
+            line-height: 1.8;
+            color: var(--text-white);
+            font-weight: 300;
+        }
+
+        .section-content p {
+            margin-bottom: 1.5rem;
+        }
+
+        .spanish-text {
+            font-family: 'Playfair Display', serif;
+            font-size: 1rem;
+            line-height: 1.8;
+            color: var(--text-gray);
+            font-style: italic;
+            border-left: 2px solid var(--border-gold);
+            padding-left: 2rem;
+            margin-top: 2rem;
+        }
+
+        .spanish-text p {
+            margin-bottom: 1rem;
+        }
+
+        /* Values Section */
+        .values-section {
+            background-color: var(--darker-bg);
+            padding: 6rem 3rem;
+        }
+
+        .values-header {
+            text-align: center;
+            margin-bottom: 5rem;
+        }
+
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .value-card {
+            border: 1px solid rgba(201, 169, 97, 0.2);
+            padding: 3rem 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            background: rgba(26, 29, 35, 0.3);
+        }
+
+        .value-card:hover {
+            border-color: var(--gold);
+            background: rgba(26, 29, 35, 0.5);
+        }
+
+        .value-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(201, 169, 97, 0.15);
+            margin: 0 auto 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .value-icon::after {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: var(--gold);
+            border-radius: 50%;
+        }
+
+        .value-title {
+            font-size: 1.125rem;
+            font-weight: 400;
+            color: var(--text-white);
+            margin-bottom: 0.75rem;
+            line-height: 1.4;
+        }
+
+        .value-subtitle {
+            font-family: 'Playfair Display', serif;
+            font-size: 0.9rem;
+            color: var(--text-gray);
+            font-style: italic;
+            line-height: 1.4;
+        }
+
+        /* Products Section */
+        .products-section {
+            background-color: var(--dark-bg);
+            padding: 6rem 3rem;
+        }
+
+        .products-placeholder {
+            border: 2px dashed rgba(201, 169, 97, 0.3);
+            padding: 8rem 4rem;
+            text-align: center;
+            max-width: 1400px;
+            margin: 3rem auto 0;
+            background: rgba(15, 17, 21, 0.5);
+        }
+
+        .products-placeholder span {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.25rem;
+            color: var(--text-gray);
+            font-style: italic;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #000000;
+            padding: 4rem 3rem 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .footer-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 4rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-brand-logo {
+            width: 120px;
+            height: auto;
+            margin-bottom: 1.5rem;
+            filter: brightness(1.2);
+        }
+
+        .footer-text {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-text-italic {
+            font-family: 'Playfair Display', serif;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.875rem;
+            font-style: italic;
+            line-height: 1.6;
+        }
+
+        .footer-section h4 {
+            color: var(--gold);
+            font-size: 1rem;
+            font-weight: 400;
+            margin-bottom: 1.5rem;
+            letter-spacing: 1px;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .footer-links svg {
+            width: 18px;
+            height: 18px;
+            stroke: var(--gold);
+            flex-shrink: 0;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-link {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.05);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .social-link:hover {
+            background: var(--gold);
+        }
+
+        .social-link svg {
+            width: 20px;
+            height: 20px;
+            stroke: var(--text-white);
+        }
+
+        .social-link:hover svg {
+            stroke: #000;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 0.875rem;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 1024px) {
+            nav {
+                padding: 1.5rem 2rem;
+            }
+
+            .logo img {
+                height: 70px;
+            }
+
+            .nav-links {
+                gap: 2rem;
+                font-size: 0.7rem;
+            }
+
+            section {
+                padding: 5rem 2rem;
+            }
+
+            .section-grid,
+            .section-grid.reverse {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+
+            .section-grid.reverse .section-title-area {
+                text-align: left;
+                padding-left: 0;
+            }
+
+            .section-grid.reverse .section-divider {
+                margin-left: 0;
+            }
+
+            .values-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .footer-container {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                padding: 1rem 1.5rem;
+            }
+
+            .logo img {
+                height: 60px;
+            }
+
+            .nav-links {
+                gap: 1.5rem;
+                font-size: 0.65rem;
+            }
+
+            .hero-logo-container {
+                padding: 0;
+            }
+
+            .hero-logo-img {
+                width: 180px;
+            }
+
+            .hero-title {
+                font-size: 1.5rem;
+            }
+
+            .hero-subtitle {
+                font-size: 0.95rem;
+            }
+
+            section {
+                padding: 3rem 1.5rem;
+                min-height: auto;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .section-subtitle {
+                font-size: 1rem;
+            }
+
+            .section-content {
+                font-size: 0.95rem;
+            }
+
+            .spanish-text {
+                font-size: 0.875rem;
+                padding-left: 1rem;
+            }
+
+            .values-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .value-card {
+                padding: 2rem 1.5rem;
+            }
+
+            .products-placeholder {
+                padding: 4rem 2rem;
+            }
+
+            footer {
+                padding: 3rem 1.5rem 2rem;
+            }
+
+            .footer-brand-logo {
+                width: 100px;
+            }
+
+            .footer-text {
+                font-size: 0.875rem;
+            }
+
+            .footer-text-italic {
+                font-size: 0.8rem;
+            }
+
+            .footer-section h4 {
+                font-size: 0.95rem;
+            }
+
+            .footer-links li {
+                font-size: 0.85rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            nav {
+                padding: 0.75rem 1rem;
+            }
+
+            .logo img {
+                height: 50px;
+            }
+
+            .nav-links {
+                display: flex;
+                gap: 1rem;
+                font-size: 0.6rem;
+                letter-spacing: 1px;
+            }
+
+            .hero-logo-img {
+                width: 150px;
+            }
+
+            .hero-title {
+                font-size: 1.25rem;
+                letter-spacing: 1px;
+            }
+
+            .hero-subtitle {
+                font-size: 0.85rem;
+            }
+
+            section {
+                padding: 2.5rem 1rem;
+            }
+
+            .section-title {
+                font-size: 1.75rem;
+            }
+
+            .section-subtitle {
+                font-size: 0.9rem;
+            }
+
+            .section-content {
+                font-size: 0.9rem;
+                line-height: 1.6;
+            }
+
+            .spanish-text {
+                font-size: 0.8rem;
+                padding-left: 0.75rem;
+            }
+
+            .value-card {
+                padding: 1.5rem 1rem;
+            }
+
+            .value-title {
+                font-size: 1rem;
+            }
+
+            .value-subtitle {
+                font-size: 0.8rem;
+            }
+
+            .products-placeholder {
+                padding: 3rem 1.5rem;
+            }
+
+            .products-placeholder span {
+                font-size: 1rem;
+            }
+
+            footer {
+                padding: 2rem 1rem 1.5rem;
+            }
+
+            .footer-brand-logo {
+                width: 80px;
+            }
+
+            .footer-text {
+                font-size: 0.8rem;
+            }
+
+            .footer-text-italic {
+                font-size: 0.75rem;
+            }
+
+            .footer-links li {
+                font-size: 0.8rem;
+            }
+
+            .footer-bottom {
+                font-size: 0.75rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="logo">
+            <img src="logoo.png" alt="LUSSO">
+        </div>
+        <ul class="nav-links">
+            <li><a href="#about">ABOUT</a></li>
+            <li><a href="#vision">VISION</a></li>
+            <li><a href="#mission">MISSION</a></li>
+            <li><a href="#products">PRODUCTS</a></li>
+        </ul>
+        <button class="menu-btn">☰</button>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="hero">
+        <div class="hero-bg">
+            <img src="badt.png" alt="Luxury Bathroom">
+            <div class="hero-overlay"></div>
+        </div>
+        <div class="hero-content">
+            <div class="hero-logo-container">
+                <img class="hero-logo-img" src="logoo.png" alt="LUSSO">
+            </div>
+            <h1 class="hero-title">Redefining the Essence of Luxury</h1>
+            <p class="hero-subtitle">Redefiniendo la Esencia del Lujo</p>
+        </div>
+        <div class="scroll-indicator">
+            <svg viewBox="0 0 24 24" fill="none">
+                <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+        </div>
+    </div>
+
+    <!-- Who We Are Section -->
+    <section id="about">
+        <div class="section-container">
+            <div class="section-grid">
+                <div class="section-title-area">
+                    <h2 class="section-title">Who We Are</h2>
+                    <p class="section-subtitle">Quiénes Somos</p>
+                    <div class="section-divider"></div>
+                </div>
+                <div>
+                    <div class="section-content">
+                        <p>Founded in 2008 in Barcelona, Spain, one of Europe's leading cities for design and architecture. The company began as a passionate project to redefine the concept of luxury in the world of sanitary ware and plumbing, inspired by ancient Spanish craftsmanship heritage with a modern innovative touch.</p>
+                        <p>Since then, Lusso has grown to become a symbol of quality and excellence, transforming its ideas into products that adorn bathrooms in high-end homes and luxury hotels around the world.</p>
+                    </div>
+                    <div class="spanish-text">
+                        <p>Fundada en 2008 en Barcelona, España, una de las principales ciudades de diseño y arquitectura de Europa. La empresa comenzó como un proyecto apasionado para redefinir el concepto de lujo en el mundo de los sanitarios y la fontanería, inspirada en la antigua herencia artesanal española con un toque moderno e innovador.</p>
+                        <p>Desde entonces, Lusso ha crecido hasta convertirse en un símbolo de calidad y excelencia, transformando sus ideas en productos que adornan los baños de hogares de alta gama y hoteles de lujo en todo el mundo.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Our Vision Section -->
+    <section id="vision">
+        <div class="section-container">
+            <div class="section-grid reverse">
+                <div>
+                    <div class="section-content">
+                        <p>At Lusso, we seek to transform the bathroom from a mere functional space into a sanctuary of comfort and timeless elegance. We believe that every detail must reflect true luxury, whether in clean, elegant design or in the selection of refined materials and precise finishes.</p>
+                    </div>
+                    <div class="spanish-text">
+                        <p>En Lusso, buscamos transformar el baño de un mero espacio funcional a un santuario de confort y elegancia atemporal. Creemos que cada detalle debe reflejar el verdadero lujo, ya sea en un diseño limpio y elegante o en la selección de materiales refinados y acabados precisos.</p>
+                    </div>
+                </div>
+                <div class="section-title-area">
+                    <h2 class="section-title">Our Vision</h2>
+                    <p class="section-subtitle">Nuestra Visión</p>
+                    <div class="section-divider"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Our Mission Section -->
+    <section id="mission">
+        <div class="section-container">
+            <div class="section-grid">
+                <div class="section-title-area">
+                    <h2 class="section-title">Our Mission</h2>
+                    <p class="section-subtitle">Nuestra Misión</p>
+                    <div class="section-divider"></div>
+                </div>
+                <div>
+                    <div class="section-content">
+                        <p>We are committed to manufacturing luxury sanitary and plumbing products that combine traditional Spanish craftsmanship with modern technological innovation. Our mission is to ensure customer satisfaction through unbeatable quality and designs that exceed expectations.</p>
+                    </div>
+                    <div class="spanish-text">
+                        <p>Nos comprometemos a fabricar productos sanitarios y de fontanería de lujo que combinan la artesanía tradicional española con la innovación tecnológica moderna. Nuestra misión es garantizar la satisfacción del cliente a través de una calidad inigualable y diseños que superan las expectativas.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Our Values Section -->
+    <section class="values-section">
+        <div class="values-header">
+            <h2 class="section-title">Our Values</h2>
+            <p class="section-subtitle">Nuestros Valores</p>
+        </div>
+        <div class="values-grid">
+            <div class="value-card">
+                <div class="value-icon"></div>
+                <h4 class="value-title">Luxury in every product</h4>
+                <p class="value-subtitle">Lujo en cada producto</p>
+            </div>
+            <div class="value-card">
+                <div class="value-icon"></div>
+                <h4 class="value-title">Spanish Quality Manufacturing</h4>
+                <p class="value-subtitle">Calidad Española en la Fabricación</p>
+            </div>
+            <div class="value-card">
+                <div class="value-icon"></div>
+                <h4 class="value-title">Design Innovation</h4>
+                <p class="value-subtitle">Innovación en el Diseño</p>
+            </div>
+            <div class="value-card">
+                <div class="value-icon"></div>
+                <h4 class="value-title">Sustainability & Responsibility</h4>
+                <p class="value-subtitle">Sostenibilidad y Responsabilidad</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Our Products Section -->
+    <section id="products" class="products-section">
+        <div class="values-header">
+            <h2 class="section-title">Our Products</h2>
+            <p class="section-subtitle">Nuestros Productos</p>
+        </div>
+        <div class="products-placeholder">
+            <span>Coming Soon / Próximamente</span>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-brand">
+                <img class="footer-brand-logo" src="logoo.png" alt="LUSSO">
+                <p class="footer-text">Redefining the concept of luxury in sanitary ware.</p>
+                <p class="footer-text-italic">Redefiniendo el concepto de lujo en artículos sanitarios.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Contact / Contacto</h4>
+                <ul class="footer-links">
+                    <li>
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
+                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                            <circle cx="12" cy="10" r="3"></circle>
+                        </svg>
+                        <span>Barcelona, Spain</span>
+                    </li>
+                    <li>
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
+                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                            <polyline points="22,6 12,13 2,6"></polyline>
+                        </svg>
+                        <span>info@lusso.com</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            © 2024 Lusso Design. All rights reserved.
+        </div>
+    </footer>
+
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
