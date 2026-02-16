@@ -65,7 +65,7 @@
         }
 
         .logo img {
-            height: 100px;
+            height: 140px;
             width: auto;
         }
 
@@ -96,6 +96,7 @@
             color: var(--text-white);
             font-size: 1.5rem;
             cursor: pointer;
+            z-index: 1001;
         }
 
         /* Hero Section */
@@ -265,6 +266,28 @@
             margin-bottom: 1.5rem;
         }
 
+        .product-features {
+            margin-top: 2rem;
+            color: var(--text-gray);
+            line-height: 1.8;
+            list-style: none;
+            padding: 0;
+        }
+
+        .product-features li {
+            margin-bottom: 0.75rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .product-features li::before {
+            content: '✔';
+            position: absolute;
+            left: 0;
+            color: var(--gold);
+            font-weight: bold;
+        }
+
         .spanish-text {
             font-family: 'Playfair Display', serif;
             font-size: 1rem;
@@ -351,22 +374,6 @@
         .products-section {
             background-color: var(--dark-bg);
             padding: 6rem 3rem;
-        }
-
-        .products-placeholder {
-            border: 2px dashed rgba(201, 169, 97, 0.3);
-            padding: 8rem 4rem;
-            text-align: center;
-            max-width: 1400px;
-            margin: 3rem auto 0;
-            background: rgba(15, 17, 21, 0.5);
-        }
-
-        .products-placeholder span {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.25rem;
-            color: var(--text-gray);
-            font-style: italic;
         }
 
         /* Footer */
@@ -481,7 +488,7 @@
             }
 
             .logo img {
-                height: 70px;
+                height: 100px;
             }
 
             .nav-links {
@@ -524,12 +531,85 @@
             }
 
             .logo img {
-                height: 60px;
+                height: 90px;
             }
 
             .nav-links {
-                gap: 1.5rem;
-                font-size: 0.65rem;
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 280px;
+                height: 100vh;
+                background: rgba(26, 29, 35, 0.98);
+                backdrop-filter: blur(10px);
+                flex-direction: column;
+                gap: 0;
+                padding: 6rem 2rem 2rem;
+                transition: right 0.3s ease;
+                box-shadow: -5px 0 15px rgba(0, 0, 0, 0.3);
+            }
+
+            .nav-links.active {
+                right: 0;
+            }
+
+            .nav-links li {
+                width: 100%;
+                border-bottom: 1px solid rgba(201, 169, 97, 0.1);
+            }
+
+            .nav-links a {
+                display: block;
+                padding: 1.5rem 0;
+                font-size: 0.9rem;
+                letter-spacing: 2px;
+            }
+
+            .menu-btn {
+                display: block;
+                position: relative;
+                width: 30px;
+                height: 24px;
+                background: transparent;
+                border: none;
+                cursor: pointer;
+                padding: 0;
+            }
+
+            .menu-btn span {
+                position: absolute;
+                left: 0;
+                width: 100%;
+                height: 2px;
+                background: var(--text-white);
+                transition: all 0.3s ease;
+            }
+
+            .menu-btn span:nth-child(1) {
+                top: 0;
+            }
+
+            .menu-btn span:nth-child(2) {
+                top: 50%;
+                transform: translateY(-50%);
+            }
+
+            .menu-btn span:nth-child(3) {
+                bottom: 0;
+            }
+
+            .menu-btn.active span:nth-child(1) {
+                top: 50%;
+                transform: translateY(-50%) rotate(45deg);
+            }
+
+            .menu-btn.active span:nth-child(2) {
+                opacity: 0;
+            }
+
+            .menu-btn.active span:nth-child(3) {
+                bottom: 50%;
+                transform: translateY(50%) rotate(-45deg);
             }
 
             .hero-logo-container {
@@ -579,10 +659,6 @@
                 padding: 2rem 1.5rem;
             }
 
-            .products-placeholder {
-                padding: 4rem 2rem;
-            }
-
             footer {
                 padding: 3rem 1.5rem 2rem;
             }
@@ -614,14 +690,11 @@
             }
 
             .logo img {
-                height: 50px;
+                height: 80px;
             }
 
             .nav-links {
-                display: flex;
-                gap: 1rem;
-                font-size: 0.6rem;
-                letter-spacing: 1px;
+                width: 260px;
             }
 
             .hero-logo-img {
@@ -671,14 +744,6 @@
                 font-size: 0.8rem;
             }
 
-            .products-placeholder {
-                padding: 3rem 1.5rem;
-            }
-
-            .products-placeholder span {
-                font-size: 1rem;
-            }
-
             footer {
                 padding: 2rem 1rem 1.5rem;
             }
@@ -711,13 +776,17 @@
         <div class="logo">
             <img src="logoo.png" alt="LUSSO">
         </div>
-        <ul class="nav-links">
+        <ul class="nav-links" id="navLinks">
             <li><a href="#about">ABOUT</a></li>
             <li><a href="#vision">VISION</a></li>
             <li><a href="#mission">MISSION</a></li>
             <li><a href="#products">PRODUCTS</a></li>
         </ul>
-        <button class="menu-btn">☰</button>
+        <button class="menu-btn" id="menuBtn">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
     </nav>
 
     <!-- Hero Section -->
@@ -766,7 +835,12 @@
     <!-- Our Vision Section -->
     <section id="vision">
         <div class="section-container">
-            <div class="section-grid reverse">
+            <div class="section-grid">
+                <div class="section-title-area">
+                    <h2 class="section-title">Our Vision</h2>
+                    <p class="section-subtitle">Nuestra Visión</p>
+                    <div class="section-divider"></div>
+                </div>
                 <div>
                     <div class="section-content">
                         <p>At Lusso, we seek to transform the bathroom from a mere functional space into a sanctuary of comfort and timeless elegance. We believe that every detail must reflect true luxury, whether in clean, elegant design or in the selection of refined materials and precise finishes.</p>
@@ -774,11 +848,6 @@
                     <div class="spanish-text">
                         <p>En Lusso, buscamos transformar el baño de un mero espacio funcional a un santuario de confort y elegancia atemporal. Creemos que cada detalle debe reflejar el verdadero lujo, ya sea en un diseño limpio y elegante o en la selección de materiales refinados y acabados precisos.</p>
                     </div>
-                </div>
-                <div class="section-title-area">
-                    <h2 class="section-title">Our Vision</h2>
-                    <p class="section-subtitle">Nuestra Visión</p>
-                    <div class="section-divider"></div>
                 </div>
             </div>
         </div>
@@ -837,12 +906,50 @@
 
     <!-- Our Products Section -->
     <section id="products" class="products-section">
-        <div class="values-header">
-            <h2 class="section-title">Our Products</h2>
-            <p class="section-subtitle">Nuestros Productos</p>
-        </div>
-        <div class="products-placeholder">
-            <span>Coming Soon / Próximamente</span>
+        <div class="section-container">
+            <div class="section-grid">
+                
+                <div class="section-title-area">
+                    <h2 class="section-title">Flush Mechanism</h2>
+                    <p class="section-subtitle">Mecanismo de Descarga</p>
+                    <div class="section-divider"></div>
+                </div>
+
+                <div>
+                    <div class="section-content">
+                        <p>
+                            Our premium flush mechanism is engineered for durability, precision, and silent performance. 
+                            Designed to ensure efficient water control and long-term reliability, it reflects Lusso's 
+                            commitment to excellence in every internal detail.
+                        </p>
+
+                        <p>
+                            Manufactured with high-quality resistant materials, it guarantees smooth operation 
+                            and compatibility with modern sanitary systems.
+                        </p>
+
+                        <ul class="product-features">
+                            <li>Dual Flush Compatibility</li>
+                            <li>Water Saving Technology</li>
+                            <li>High Resistance Internal Components</li>
+                            <li>Easy Installation System</li>
+                        </ul>
+                    </div>
+
+                    <div class="spanish-text">
+                        <p>
+                            Nuestro mecanismo de descarga premium está diseñado para ofrecer durabilidad, 
+                            precisión y un funcionamiento silencioso.
+                        </p>
+
+                        <p>
+                            Fabricado con materiales resistentes de alta calidad, garantiza un rendimiento 
+                            eficiente y una larga vida útil.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
         </div>
     </section>
 
@@ -879,7 +986,7 @@
         </div>
     </footer>
 
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+    <script>
         // Navbar scroll effect
         window.addEventListener('scroll', function() {
             const navbar = document.getElementById('navbar');
@@ -887,6 +994,35 @@
                 navbar.classList.add('scrolled');
             } else {
                 navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Mobile menu toggle
+        const menuBtn = document.getElementById('menuBtn');
+        const navLinks = document.getElementById('navLinks');
+
+        menuBtn.addEventListener('click', function() {
+            menuBtn.classList.toggle('active');
+            navLinks.classList.toggle('active');
+        });
+
+        // Close menu when clicking on a link
+        const menuItems = document.querySelectorAll('.nav-links a');
+        menuItems.forEach(item => {
+            item.addEventListener('click', function() {
+                menuBtn.classList.remove('active');
+                navLinks.classList.remove('active');
+            });
+        });
+
+        // Close menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const isClickInsideMenu = navLinks.contains(event.target);
+            const isClickOnMenuBtn = menuBtn.contains(event.target);
+            
+            if (!isClickInsideMenu && !isClickOnMenuBtn && navLinks.classList.contains('active')) {
+                menuBtn.classList.remove('active');
+                navLinks.classList.remove('active');
             }
         });
 
